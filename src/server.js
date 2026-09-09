@@ -1,3 +1,4 @@
+import { logRequest } from './middleware/logging.js';
 import { createServer } from 'node:http';
 
 const routes = [];
@@ -8,6 +9,7 @@ export function route(method, path, handler) {
 
 export function handle(req, res) {
   const url = new URL(req.url, 'http://localhost');
+  logRequest(req, url);
   const match = routes.find(
     (r) => r.method === req.method && r.path === url.pathname
   );
@@ -24,4 +26,16 @@ export function start(port = 3000) {
   });
 }
 
-if (process.argv[1]?.endsWith('server.js')) start();
+if (process.argv[1]?.endsWith('server.js')) {
+  const { registerRoutes } = await import('./api/index.js');
+  const { registerStatic } = await import('./static.js');
+  const { seed } = await import('./store/seed.js');
+  const { readFile } = await import('node:fs/promises');
+  const config = JSON.parse(
+    await readFile(new URL('../config/default.json', import.meta.url))
+  );
+  registerRoutes();
+  registerStatic();
+  if (config.seedOnBoot) seed();
+  start(config.port);
+}

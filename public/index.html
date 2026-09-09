@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Tasks</title>
+<link rel="stylesheet" href="./styles.css">
+<header>
+  <h1>Tasks</h1>
+  <input id="search" placeholder="Search tasks">
+</header>
+<main>
+  <aside>
+    <div id="project-picker"></div>
+    <div id="tag-filter"></div>
+  </aside>
+  <section>
+    <form id="new-task">
+      <input name="title" placeholder="What needs doing?" required>
+      <input name="tags" placeholder="tags, comma, separated">
+      <button>Add</button>
+    </form>
+    <div id="task-list"></div>
+  </section>
+</main>
+<div id="toast"></div>
+<script type="module" src="./app.js"></script>
