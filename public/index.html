@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Tasks</title>
+<style>
+  body { font: 15px system-ui; max-width: 40rem; margin: 3rem auto; }
+  li { margin: .4rem 0; }
+  .tag { background: #eef; border-radius: 3px; padding: 0 .3rem; font-size: .8em; }
+</style>
+<h1>Tasks</h1>
+<form id="new">
+  <input name="title" placeholder="Task title" required>
+  <input name="tags" placeholder="tags, comma, separated">
+  <button>Add</button>
+</form>
+<input id="filter" placeholder="Filter by tag">
+<ul id="list"></ul>
+<script type="module" src="./app.js"></script>
