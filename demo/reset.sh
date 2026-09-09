@@ -31,4 +31,8 @@ for branch in $branches; do
   git push -q origin --delete "$branch" >/dev/null 2>&1 || true
 done
 
+# Drop stale remote-tracking refs for the branches just deleted. Without
+# this, the next `gh stack submit` is rejected with "stale info".
+git fetch --prune -q
+
 echo "reset done"
