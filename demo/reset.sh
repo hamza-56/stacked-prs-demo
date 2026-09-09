@@ -7,9 +7,17 @@ set -uo pipefail
 PREFIX="${PREFIX:-live}"
 cd "$(dirname "$0")/.."
 
-git checkout -q main
+branches=$(git branch --list "${PREFIX}-*" | tr -d ' *')
 
-gh stack unstack 2>/dev/null || true
+# Unstack FIRST, from inside the stack. Deleting the branches before this
+# leaves an orphaned entry in .git/gh-stack that later runs trip over.
+if [ -n "$branches" ]; then
+  top=$(echo "$branches" | tail -1)
+  git checkout -q "$top"
+  gh stack unstack 2>/dev/null || gh stack unstack --local 2>/dev/null || true
+fi
+
+git checkout -q main
 
 for pr in $(gh pr list --state open --json number,headRefName \
     --jq '.[] | select(.headRefName | startswith("'"$PREFIX"'")) | .number'); do
@@ -17,11 +25,10 @@ for pr in $(gh pr list --state open --json number,headRefName \
   gh pr close "$pr" --delete-branch >/dev/null 2>&1 || true
 done
 
-for branch in $(git branch --list "${PREFIX}-*" | tr -d ' *'); do
-  echo "deleting local branch $branch"
+for branch in $branches; do
+  echo "deleting branch $branch"
   git branch -D "$branch" >/dev/null 2>&1 || true
   git push -q origin --delete "$branch" >/dev/null 2>&1 || true
 done
 
-git checkout -q main
 echo "reset done"
