@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "test": "NODE_ENV=test node --test \"test/*.test.js\"",
+    "test": "NODE_ENV=test node --test test/*.test.js",
     "seed": "node -e \"import('./src/store/seed.js').then(m => console.log(m.seed()))\""
   }
 }
