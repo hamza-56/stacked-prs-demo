@@ -70,6 +70,7 @@ run git commit -qm "Add GET /api/due endpoint"
 say "One more layer for the UI, which depends on the endpoint below it."
 run gh stack add "${PREFIX}-03-due-badge"
 
+mkdir -p public
 cat > public/dueBadge.js << 'EOF'
 export async function renderDueBadge(el, dueAt) {
   if (!dueAt) return;
