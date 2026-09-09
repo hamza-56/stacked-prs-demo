@@ -11,3 +11,7 @@ export function dueLabel(iso, from = Date.now()) {
   if (days < 0) return `overdue by ${Math.abs(days)}d`;
   return days === 0 ? 'due today' : `due in ${days}d`;
 }
+
+export function isOverdue(iso, from = Date.now()) {
+  return Boolean(iso) && new Date(iso) < from;
+}
