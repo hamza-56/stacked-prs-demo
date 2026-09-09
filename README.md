@@ -14,3 +14,12 @@ main
 
 Each PR is small enough to read in one sitting, and each shows only the
 diff for its own layer.
+
+## Running it
+
+```bash
+npm start        # http://localhost:3000
+npm test
+```
+
+See `docs/API.md` for endpoints and `docs/ARCHITECTURE.md` for the layering.
