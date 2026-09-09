@@ -14,3 +14,18 @@ main
 
 Each PR is small enough to read in one sitting, and each shows only the
 diff for its own layer.
+
+## Running it
+
+```bash
+npm start        # http://localhost:3000
+npm test
+```
+
+## API
+
+| Method | Path                  | Notes                        |
+|--------|-----------------------|------------------------------|
+| GET    | `/api/tasks?tag=`     | List tasks, optional tag filter |
+| POST   | `/api/tasks`          | `{ "title": "...", "tags": [] }` |
+| GET    | `/api/task?id=`       | Fetch one task               |
