@@ -24,4 +24,10 @@ export function start(port = 3000) {
   });
 }
 
-if (process.argv[1]?.endsWith('server.js')) start();
+if (process.argv[1]?.endsWith('server.js')) {
+  const { registerRoutes } = await import('./api.js');
+  const { registerStatic } = await import('./static.js');
+  registerRoutes();
+  registerStatic();
+  start();
+}
